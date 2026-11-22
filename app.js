@@ -256,6 +256,7 @@ function setupMotion() {
   const hero = document.querySelector('.hero');
   const ring = document.querySelector('.cursor-orbit');
   const backdrop = document.querySelector('.space-backdrop');
+  const sceneWindows = [...document.querySelectorAll('.parallax-window')];
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   let frame = 0;
@@ -277,6 +278,13 @@ function setupMotion() {
     if (reduceMotion.matches) return;
 
     const bounds = hero.getBoundingClientRect();
+    const windowDepths = sceneWindows.map(pass => {
+      const rect = pass.getBoundingClientRect();
+      return clampUnit((innerHeight - rect.top) / (innerHeight + rect.height)) * 2 - 1;
+    });
+    for (const [index, pass] of sceneWindows.entries()) {
+      pass.style.setProperty('--pass-scroll', (windowDepths[index] * 80).toFixed(2) + 'px');
+    }
     const inside = pointer && pointer.x >= bounds.left && pointer.x <= bounds.right
       && pointer.y >= bounds.top && pointer.y <= bounds.bottom;
     const x = inside ? (pointer.x - bounds.left) / bounds.width : .85;

@@ -232,3 +232,62 @@ header{background:#0b1315;border-bottom-color:#27423e}
 @media(prefers-reduced-motion:reduce){
   .hero-grid{transform:perspective(410px) rotateX(57deg)}
 }
+
+/* Cropped views of the same orbital world, with independent depth planes. */
+.parallax-window{
+  --pass-offset:var(--pass-scroll,0px);
+  position:relative;isolation:isolate;overflow:hidden;pointer-events:none;
+  height:clamp(104px,13vw,158px);margin-bottom:clamp(24px,4.5vw,62px);
+  border:1px solid #314e4f;border-radius:12px;
+  background:#0a141b;
+}
+.pass-layer{position:absolute;inset:0}
+.pass-sky{
+  inset:-70px -5%;
+  background:
+    radial-gradient(ellipse at 69% 68%,#75e2bf50 0%,#203f53 27%,transparent 62%),
+    radial-gradient(circle,#caebff69 0 .7px,transparent 1.3px) 13px 19px / 67px 71px,
+    linear-gradient(110deg,#0b151e,#171b39);
+  transform:translateY(calc(var(--pass-offset,0px) * -.4));
+}
+.pass-orbit{
+  width:126%;height:clamp(220px,35vw,440px);inset:14% auto auto -13%;
+  border:1px solid #b1ffe174;border-radius:50%;background:#0c1c26;
+  box-shadow:0 -7px 32px #78efb148,inset 0 13px 55px #6dc9b43a;
+  transform:translateY(calc(var(--pass-offset,0px) * -.88)) rotate(-5deg);
+}
+.pass-front{
+  inset:-65px 0;
+  background:
+    repeating-linear-gradient(90deg,#c3ffdb1a 0 1px,transparent 1px 42px),
+    repeating-linear-gradient(0deg,#c3ffdb14 0 1px,transparent 1px 28px);
+  mask-image:linear-gradient(100deg,#000,transparent 80%);
+  transform:translateY(calc(var(--pass-offset,0px) * .67));
+}
+.pass-transit .pass-sky{
+  background:
+    radial-gradient(circle at 26% 50%,#9ae6be30,transparent 31%),
+    radial-gradient(circle at 74% 48%,#8269d54a,transparent 52%),
+    radial-gradient(circle,#d5dbff86 0 .75px,transparent 1.4px) 31px 12px / 53px 61px,
+    #101724;
+}
+.pass-transit .pass-orbit{
+  width:80%;height:130%;inset:-16% 9% auto auto;
+  background:transparent;
+  border-color:#9698ec8c;
+  box-shadow:0 0 0 16px #8fabde14,0 0 0 34px #7fd2cf24,0 0 0 52px #8fabde14;
+  transform:translateY(calc(var(--pass-offset,0px) * .75)) rotate(-12deg);
+}
+.pass-transit .pass-front{
+  background:linear-gradient(105deg,transparent 40%,#a2ffe129 49%,transparent 58%);
+  mask-image:none;
+  transform:translateX(calc(var(--pass-offset,0px) * -1.1));
+}
+@media(max-width:650px){
+  .parallax-window{height:104px}
+  .pass-orbit{width:158%;left:-29%}
+  .pass-transit .pass-orbit{width:92%;left:auto;right:3%}
+}
+@media(prefers-reduced-motion:reduce){
+  .parallax-window{--pass-offset:0px}
+}
