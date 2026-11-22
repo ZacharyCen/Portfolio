@@ -281,17 +281,18 @@ function setupMotion() {
       return clampUnit((innerHeight - rect.top) / (innerHeight + rect.height)) * 2 - 1;
     });
     for (const [index, pass] of sceneWindows.entries()) {
-      pass.style.setProperty('--pass-scroll', (windowDepths[index] * 80).toFixed(2) + 'px');
+      pass.style.setProperty('--pass-scroll', (windowDepths[index] * 126).toFixed(2) + 'px');
     }
     const inside = pointer && pointer.x >= bounds.left && pointer.x <= bounds.right
       && pointer.y >= bounds.top && pointer.y <= bounds.bottom;
     const x = inside ? (pointer.x - bounds.left) / bounds.width : .85;
     const y = inside ? (pointer.y - bounds.top) / bounds.height : .52;
-    const heroTravel = clampUnit(-bounds.top / (bounds.height || 1));
-    const scrollOffset = heroTravel * bounds.height * .19;
-    hero.style.setProperty('--grid-depth', (heroTravel * 55).toFixed(2) + 'px');
+    // Offset artwork from the first scroll tick. The headline moves with the document.
+    const heroScroll = Math.max(0, Math.min(scrollY, bounds.height));
+    hero.style.setProperty('--planet-lag', (heroScroll * .54).toFixed(2) + 'px');
+    hero.style.setProperty('--grid-depth', (heroScroll * -.25).toFixed(2) + 'px');
     const targetX = inside ? (x - .5) * 65 : 0;
-    const targetY = scrollOffset + (inside ? (y - .5) * 48 : 0);
+    const targetY = inside ? (y - .5) * 48 : 0;
     orbitX += (targetX - orbitX) * .16;
     orbitY += (targetY - orbitY) * .16;
     hero.style.setProperty('--orbit-x', orbitX.toFixed(2) + 'px');
@@ -299,7 +300,7 @@ function setupMotion() {
     hero.style.setProperty('--light-x', (x * 100).toFixed(1) + '%');
     hero.style.setProperty('--light-y', (y * 100).toFixed(1) + '%');
     hero.style.setProperty('--tilt-y', (orbitX * .28).toFixed(2) + 'deg');
-    hero.style.setProperty('--tilt-x', ((orbitY - scrollOffset) * -.36).toFixed(2) + 'deg');
+    hero.style.setProperty('--tilt-x', (orbitY * -.36).toFixed(2) + 'deg');
 
     const fieldTargetX = pointer ? (pointer.x / innerWidth - .5) * 34 : 0;
     const pageTravel = clampUnit(scrollY / (document.documentElement.scrollHeight - innerHeight || 1));

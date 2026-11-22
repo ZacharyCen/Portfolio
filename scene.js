@@ -115,7 +115,7 @@ function start() {
     system.rotation.x = MathUtils.lerp(system.rotation.x, targetY * .24 - scrollDepth * .25, .055);
     system.rotation.y = MathUtils.lerp(system.rotation.y, targetX * .32, .055);
     system.rotation.z = .39 + Math.sin(t * .29) * .075;
-    system.position.y = (compact ? -1.0 : 0) + Math.sin(t * .76) * .14 - scrollDepth * 1.45;
+    system.position.y = (compact ? -1.0 : 0) + Math.sin(t * .76) * .14 - scrollDepth * .32;
     system.scale.setScalar((compact ? .69 : 1) * (1 + scrollDepth * .14));
     dust.position.y = -scrollDepth * .35;
     dust.rotation.z = t * .007;

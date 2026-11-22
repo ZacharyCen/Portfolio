@@ -226,7 +226,7 @@ header{background:#0b1315;border-bottom-color:#27423e}
 .parallax-window{
   --pass-offset:var(--pass-scroll,0px);
   position:relative;isolation:isolate;overflow:hidden;pointer-events:none;
-  height:clamp(104px,13vw,158px);margin-bottom:clamp(24px,4.5vw,62px);
+  height:clamp(130px,19vw,230px);margin-bottom:clamp(24px,4.5vw,62px);
   border:1px solid #314e4f;border-radius:12px;
   background:#0a141b;
 }
@@ -246,7 +246,7 @@ header{background:#0b1315;border-bottom-color:#27423e}
   transform:translateY(calc(var(--pass-offset,0px) * -.88)) rotate(-5deg);
 }
 .pass-front{
-  inset:-65px 0;
+  inset:-100px 0;
   background:
     repeating-linear-gradient(90deg,#c3ffdb1a 0 1px,transparent 1px 42px),
     repeating-linear-gradient(0deg,#c3ffdb14 0 1px,transparent 1px 28px);
@@ -273,10 +273,23 @@ header{background:#0b1315;border-bottom-color:#27423e}
   transform:translateX(calc(var(--pass-offset,0px) * -1.1));
 }
 @media(max-width:650px){
-  .parallax-window{height:104px}
+  .parallax-window{height:136px}
   .pass-orbit{width:158%;left:-29%}
   .pass-transit .pass-orbit{width:92%;left:auto;right:3%}
 }
 @media(prefers-reduced-motion:reduce){
   .parallax-window{--pass-offset:0px}
+}
+
+/* Travel in screen space: the planet lags behind the page and the grid leads it. */
+@media(prefers-reduced-motion:no-preference){
+  .orbit-scene,.orbits{translate:0 var(--planet-lag,0px)}
+  .hero::before{
+    inset:-140px 0;
+    translate:0 calc(var(--planet-lag,0px) * .28);
+  }
+}
+.hero-grid{opacity:.72}
+@media(max-width:650px){
+  .hero-grid{opacity:.52}
 }
