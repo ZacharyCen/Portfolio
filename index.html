@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a1021">
+<title>Application Atlas · Fall 2030</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230e1628%27/%3E%3Cpath d=%27M16 3l3 10 10 3-10 3-3 10-3-10-10-3 10-3z%27 fill=%27%2387fac0%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script src="data.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="space-backdrop" aria-hidden="true"><div class="space-layer space-far"></div><div class="space-layer space-near"></div></div>
+<div class="cursor-orbit" aria-hidden="true"></div>
+<header><div class="shell mast"><a class="brand" href="#top"><span aria-hidden="true">✥</span> Application Atlas</a><nav aria-label="Sections"><a href="#achievements">Achievements</a><a href="#roadmap">Roadmap</a><a href="#schools">Schools</a><a href="#review">Plan review</a><a href="#sources">Sources</a></nav><span class="cycle">FALL 2030</span></div></header>
+<main class="shell" id="top">
+<section class="hero" aria-labelledby="title">
+<svg class="orbits" viewBox="0 0 760 300" aria-hidden="true"><defs><radialGradient id="halo"><stop stop-color="#26f1a9" stop-opacity=".44"/><stop offset="1" stop-color="#26f1a9" stop-opacity="0"/></radialGradient>
+<radialGradient id="planet" cx=".28" cy=".22" r=".76"><stop stop-color="#ddfff4"/><stop offset=".24" stop-color="#78e2c9"/><stop offset=".57" stop-color="#326c85"/><stop offset=".86" stop-color="#172542"/><stop offset="1" stop-color="#0b1328"/></radialGradient>
+<radialGradient id="atmosphere"><stop offset=".66" stop-color="#87ffd8" stop-opacity="0"/><stop offset=".82" stop-color="#acffe9" stop-opacity=".57"/><stop offset="1" stop-color="#74ffd8" stop-opacity="0"/></radialGradient>
+</defs><g transform="translate(538 146) rotate(-23)" fill="none" stroke-width="1.1">
+<circle r="86" fill="url(#halo)"/><ellipse rx="36" ry="13" stroke="#7afac3"/><ellipse rx="64" ry="25" stroke="#6be3c5"/><ellipse rx="105" ry="42" stroke="#76caca"/><ellipse rx="152" ry="61" stroke="#b36efd"/><ellipse rx="224" ry="88" stroke="#8e5df1"/><ellipse rx="295" ry="112" stroke="#72fbb9"/><ellipse rx="354" ry="139" stroke="#65dfa8" stroke-dasharray="3 6"/><ellipse rx="414" ry="164" stroke="#8552e8"/><g class="planet-body" stroke="none">
+<circle r="60" fill="url(#atmosphere)"/><circle r="47" fill="url(#planet)" stroke="#a4ffdf66"/>
+<path d="M-42-15C-24-32 17-29 42-12M-46 1C-17-13 23-11 46 4M-40 19C-15 8 17 9 41 20" stroke="#c0fbff" stroke-opacity=".24" fill="none"/>
+</g>
+<path d="M64 0A64 25 0 0 1-64 0" stroke="#98ffdb"/>
+<path d="M105 0A105 42 0 0 1-105 0" stroke="#76caca"/>
+<circle cx="-295" r="5" class="star"/><circle cy="112" r="4" class="star"/><circle cx="-151" r="3" fill="#c69afa"/>
+</g></svg>
+<div class="hero-copy">
+<h1 id="title">Chart your course.</h1>
+<p class="subtitle">Fall 2030 university application planner</p>
+<p>Applied mathematics · Statistics · Quantitative finance</p>
+</div>
+</section>
+<section class="stats" aria-label="Application progress">
+<a class="panel metric" href="#roadmap"><span>◷ &nbsp; Next action</span><strong id="next">Loading roadmap…</strong><small id="when"></small></a>
+<div class="panel metric"><span>⚑ &nbsp; Milestones</span><strong id="progress"></strong><div class="meter"><progress id="bar" value="0" max="1" aria-label="Milestones complete"></progress><small id="percent"></small></div></div>
+<a class="panel metric" href="#schools"><span>▱ &nbsp; School shortlist</span><strong id="school-count"></strong><small>Compare fit, status and cost</small></a>
+</section>
+<section class="panel section" id="achievements">
+<h2>Achievements</h2><p>Awards and activities to draw on for applications.</p>
+<div class="achievement-grid">
+<article class="achievement math-awards">
+<h3>Math competition honors</h3>
+<ul class="award-list">
+<li><span class="award-date">2026</span><div><strong>Joint first place</strong><p>Concurso de Primavera · Nivel II</p></div></li>
+<li><span class="award-date">2026</span><div><strong>Prizewinner</strong><p>Olimpiada de Mayo</p></div></li>
+<li><span class="award-date">2025</span><div><strong>Third place</strong><p>Concurso de Primavera · Nivel II</p></div></li>
+</ul>
+</article>
+<article class="achievement">
+<h3>Math enrichment</h3>
+<p><strong>Estalmat and JHC Madrid</strong></p><p>Member of both math programs.</p>
+<p><strong>Think Academy</strong></p><p>Additional Maths / G4C coursework.</p>
+</article>
+<article class="achievement">
+<h3>Competitive golf</h3>
+<p><strong id="golf-handicap">9.9 handicap</strong></p>
+<p>Regular junior tournament competitor.</p>
+<p id="golf-handicap-status">Self-reported</p>
+<p><a href="https://rfegolf.es/aprende-mejora/consulta-handicap" target="_blank" rel="noopener noreferrer">Official RFEG lookup</a></p>
+<h3>Languages</h3>
+<p>Native-level Spanish, English and Chinese. French at B2.</p>
+</article>
+</div>
+</section>
+<div class="columns">
+<section class="panel section" id="roadmap">
+<h2>Roadmap</h2><p>Work backward from application season. Dates here are planning targets.</p>
+<div class="filters">
+<label>Status<select id="status"><option value="open">Open</option><option value="all">All tasks</option><option value="done">Complete</option></select></label>
+<label>Category<select id="category"><option value="">All categories</option></select></label>
+<label>Timeframe<select id="year"><option value="">All years</option></select></label>
+<label>Search<input id="query" type="search" placeholder="Find a task"></label>
+</div>
+<div class="road-head" aria-hidden="true"><span>Milestone</span><span>Category</span><span>Target</span></div>
+<div id="tasks"></div><button id="more" type="button" hidden></button>
+</section>
+<section class="panel section" id="schools">
+<div class="section-head"><div><h2>School shortlist</h2><p>Research prospects and track decisions.</p></div><button id="add" type="button">Add school</button></div>
+<div id="school-list"></div>
+</section>
+</div>
+<section class="panel section" id="review">
+<h2>Plan review</h2><p>Where the original plan is strong and where to revise it.</p>
+<div class="review">
+<article><h3>Build depth in maths</h3><p>Protect time for predicted grades. Keep a record of competition work and build one project you can explain in depth. Treat golf and DofE as commitments you can sustain.</p></article>
+<article><h3>Balance odds and cost</h3><p>Selective schools and out-of-state public options may still be reaches. Choose affordable options with realistic admission odds. Check fee status and costs separately for the UK.</p></article>
+<article><h3>Verify requirements by school</h3><p>UC currently excludes SAT/ACT from admissions decisions, while MIT currently requires a score. Confirm Fall 2030 testing, aid, English evidence and deadlines separately. Check whether CSS Profile is required.</p></article>
+</div>
+</section>
+<section class="panel section" id="sources">
+<h2>Official sources</h2><p id="monitor-status">Loading source checks…</p><p>Changes prompt a review. Keep using the published Fall 2030 cycle and the correct application round when confirming dates.</p>
+<div id="source-list"></div>
+</section>
+</main>
+<footer class="shell">Application Atlas · Progress and school edits stay in this browser.</footer>
+<dialog id="editor">
+<form id="school-form">
+<h2 id="form-title">Edit school</h2>
+<label>School name<input name="name" required maxlength="100"></label>
+<label>Course or interest<input name="course" maxlength="120"></label>
+<label>Official admissions URL<input name="url" type="url" pattern="https://.+" placeholder="https://"></label>
+<label>Status<select name="stage"><option>Researching</option><option>Shortlisted</option><option>Preparing</option><option>Submitted</option><option>Decision received</option></select></label>
+<label>Annual net cost estimate (USD)<input name="cost" type="number" min="0" max="1000000" step="1"></label>
+<label>Confirmed personal deadline<input name="date" type="date"></label>
+<div class="form-actions"><button id="remove" type="button">Remove</button><button id="cancel" type="button">Cancel</button><button type="submit" class="primary">Save school</button></div>
+</form>
+</dialog>
+</body></html>

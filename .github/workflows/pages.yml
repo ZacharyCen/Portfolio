@@ -1,0 +1,73 @@
+name: Deploy Application Atlas
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '31 8 * * 2'
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: Refresh admissions and golf data before publishing
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: application-atlas-production
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh admissions sources
+        if: github.event_name == 'schedule' || inputs.refresh == true
+        run: node scripts/check-sources.cjs
+      - name: Refresh golf handicap
+        if: github.event_name == 'schedule' || inputs.refresh == true
+        env:
+          RFEG_LICENCE: ${{ secrets.RFEG_LICENCE }}
+        run: |
+          if [ -n "$RFEG_LICENCE" ]; then
+            node scripts/update-handicap.cjs || echo "::warning::RFEG check failed. Keeping the last saved value."
+          fi
+      - name: Save refreshed snapshots
+        if: github.event_name == 'schedule' || inputs.refresh == true
+        run: |
+          git add source-status.json golf-handicap.json
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Refresh application data"
+            git push origin HEAD:main
+          fi
+      - name: Stage public assets
+        run: |
+          node --check app.js
+          node --check data.js
+          mkdir -p dist
+          cp index.html style.css app.js data.js source-status.json golf-handicap.json dist/
+      - name: Check Cloudflare configuration
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Add CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN to the repository's Actions secrets."
+            exit 1
+          fi
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=application-atlas-2030 --branch=main

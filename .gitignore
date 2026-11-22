@@ -1,0 +1,4 @@
+.DS_Store
+.playwright-cli/
+.env
+golf-handicap.json.tmp
