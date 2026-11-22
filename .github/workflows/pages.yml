@@ -50,12 +50,13 @@ jobs:
             git commit -m "Refresh application data"
             git push origin HEAD:main
           fi
+      - name: Install build dependencies
+        run: npm ci
       - name: Stage public assets
         run: |
           node --check app.js
           node --check data.js
-          mkdir -p dist
-          cp index.html style.css app.js data.js source-status.json golf-handicap.json dist/
+          npm run build
       - name: Check Cloudflare configuration
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

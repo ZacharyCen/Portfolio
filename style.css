@@ -125,3 +125,47 @@ body{isolation:isolate}
 @media (prefers-reduced-motion:reduce){
   .orbits,.space-layer{transform:none}
 }
+
+.orbit-scene{
+  position:absolute;z-index:-1;inset:0 0 0 auto;width:73%;height:100%;pointer-events:none;
+  opacity:0;mask-image:linear-gradient(90deg,transparent,#000 24%);
+  transition:opacity .5s ease;
+}
+.hero.has-webgl .orbit-scene{opacity:1}
+.hero.has-webgl .orbits{visibility:hidden}
+.animated-meter{
+  position:relative;display:block;flex:1;min-width:0;height:.65rem;overflow:hidden;
+  isolation:isolate;border-radius:20px;background:#303b51;
+}
+.animated-meter progress{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0}
+.meter-fill{
+  position:absolute;inset:0;background:linear-gradient(90deg,#45d4ad,#a6ffcb);
+  border-radius:inherit;transform:scaleX(var(--completion,0));transform-origin:left;
+  transition:transform .64s cubic-bezier(.22,1,.36,1);
+}
+.animated-meter::after{
+  content:"";position:absolute;inset:0;width:34%;transform:translateX(-110%);
+  background:linear-gradient(90deg,transparent,#c2fff032,transparent);pointer-events:none;
+  animation:meter-glint 5.2s ease-in-out infinite;
+}
+@keyframes meter-glint{
+  0%,40%{transform:translateX(-110%)}
+  82%,100%{transform:translateX(303%)}
+}
+.category-progress{margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+.category-progress summary{cursor:pointer;color:var(--mint);font-size:.9rem}
+#category-meters{display:grid;gap:10px;margin-top:13px}
+.category-meter{display:grid;grid-template-columns:110px minmax(0,1fr) 46px;gap:10px;align-items:center;font-size:.85rem}
+.category-meter small{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:650px){.orbit-scene{width:100%;mask-image:none}.hero.has-webgl .orbit-scene{opacity:.66}}
+@media(prefers-reduced-motion:reduce){.orbit-scene,.meter-fill{transition:none}}
+.space-backdrop::after{
+  content:"";position:absolute;inset:-12%;pointer-events:none;
+  background:radial-gradient(ellipse at 87% 31%,#6373cd29,transparent 34%),
+    radial-gradient(ellipse at 20% 79%,#66d6c820,transparent 30%);
+  animation:space-drift 22s ease-in-out infinite alternate;
+}
+@keyframes space-drift{
+  from{transform:translate3d(-3%,2%,0)}
+  to{transform:translate3d(3%,-2%,0)}
+}

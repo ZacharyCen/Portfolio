@@ -2,3 +2,5 @@
 .playwright-cli/
 .env
 golf-handicap.json.tmp
+node_modules/
+dist/

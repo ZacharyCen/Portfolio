@@ -43,13 +43,37 @@ function when(date) {
   return days < 0 ? period + ' overdue' : 'In ' + period;
 }
 
+function setMeter(progress, count, total) {
+  progress.max = total;
+  progress.value = count;
+  progress.parentElement.style.setProperty('--completion', count / total);
+}
+
+const categoryMeters = [...new Set(milestones.map(row => row[2]))].map(category => {
+  const section = node('div', '', 'category-meter');
+  const track = node('span', '', 'animated-meter');
+  const progress = node('progress');
+  progress.setAttribute('aria-label', category + ' milestones complete');
+  const fill = node('span', '', 'meter-fill');
+  fill.setAttribute('aria-hidden', 'true');
+  const count = node('small');
+  track.append(progress, fill);
+  section.append(node('span', category), track, count);
+  $('category-meters').append(section);
+  return { progress, count, ids: milestones.filter(row => row[2] === category).map(row => row[0]) };
+});
+
 function updateStats() {
   const next = milestones.find(([id]) => !completed.has(id));
   $('next').textContent = next ? next[3] : 'Roadmap complete';
   $('when').textContent = next ? when(next[1]) + ' · ' + displayDate.format(new Date(next[1])) : '';
   $('progress').textContent = completed.size + ' / ' + milestones.length + ' complete';
-  $('bar').max = milestones.length;
-  $('bar').value = completed.size;
+  setMeter($('bar'), completed.size, milestones.length);
+  for (const { progress, count, ids } of categoryMeters) {
+    const done = ids.filter(id => completed.has(id)).length;
+    setMeter(progress, done, ids.length);
+    count.textContent = done + ' / ' + ids.length;
+  }
   $('percent').textContent = Math.round(completed.size * 100 / milestones.length) + '%';
   $('school-count').textContent = schools.length + (schools.length === 1 ? ' school' : ' schools');
 }

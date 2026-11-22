@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
 <script src="app.js" defer></script>
+<script type="module" src="scene.bundle.js"></script>
 </head>
 <body>
 <div class="space-backdrop" aria-hidden="true"><div class="space-layer space-far"></div><div class="space-layer space-near"></div></div>
@@ -28,6 +29,7 @@
 <path d="M105 0A105 42 0 0 1-105 0" stroke="#76caca"/>
 <circle cx="-295" r="5" class="star"/><circle cy="112" r="4" class="star"/><circle cx="-151" r="3" fill="#c69afa"/>
 </g></svg>
+<canvas class="orbit-scene" aria-hidden="true"></canvas>
 <div class="hero-copy">
 <h1 id="title">Chart your course.</h1>
 <p class="subtitle">Fall 2030 university application planner</p>
@@ -36,7 +38,7 @@
 </section>
 <section class="stats" aria-label="Application progress">
 <a class="panel metric" href="#roadmap"><span>◷ &nbsp; Next action</span><strong id="next">Loading roadmap…</strong><small id="when"></small></a>
-<div class="panel metric"><span>⚑ &nbsp; Milestones</span><strong id="progress"></strong><div class="meter"><progress id="bar" value="0" max="1" aria-label="Milestones complete"></progress><small id="percent"></small></div></div>
+<div class="panel metric"><span>⚑ &nbsp; Milestones</span><strong id="progress"></strong><div class="meter"><span class="animated-meter"><progress id="bar" value="0" max="1" aria-label="Milestones complete"></progress><span class="meter-fill" aria-hidden="true"></span></span><small id="percent"></small></div></div>
 <a class="panel metric" href="#schools"><span>▱ &nbsp; School shortlist</span><strong id="school-count"></strong><small>Compare fit, status and cost</small></a>
 </section>
 <section class="panel section" id="achievements">
@@ -77,6 +79,7 @@
 </div>
 <div class="road-head" aria-hidden="true"><span>Milestone</span><span>Category</span><span>Target</span></div>
 <div id="tasks"></div><button id="more" type="button" hidden></button>
+<details class="category-progress"><summary>Progress by category</summary><div id="category-meters"></div></details>
 </section>
 <section class="panel section" id="schools">
 <div class="section-head"><div><h2>School shortlist</h2><p>Research prospects and track decisions.</p></div><button id="add" type="button">Add school</button></div>
