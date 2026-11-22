@@ -169,3 +169,31 @@ body{isolation:isolate}
   from{transform:translate3d(-3%,2%,0)}
   to{transform:translate3d(3%,-2%,0)}
 }
+
+/* Quiet color changes pick up the mint, ice and lilac of the orbital scene. */
+@media (prefers-reduced-motion:no-preference){
+  .hero h1{
+    color:#f7fbff;
+    animation:title-color-wave 15s ease-in-out infinite;
+  }
+  .section h2,.metric > span,.cycle{
+    animation:accent-color-wave 17s ease-in-out infinite;
+  }
+  .section:nth-of-type(even) h2,.metric:nth-child(2) > span{animation-delay:-5s}
+  .columns .section:nth-child(2) h2,.metric:nth-child(3) > span,.cycle{animation-delay:-10s}
+  .hero .subtitle{animation:subtitle-color-wave 18s ease-in-out -4s infinite}
+}
+@keyframes title-color-wave{
+  0%,100%{color:#f7fbff;text-shadow:0 4px 28px #070b1be6,0 0 35px #bfeaff14}
+  34%{color:#dcfff1;text-shadow:0 4px 28px #070b1be6,0 0 42px #85ffc433}
+  68%{color:#f0e6ff;text-shadow:0 4px 28px #070b1be6,0 0 42px #b38bff34}
+}
+@keyframes accent-color-wave{
+  0%,100%{color:#87fac0}
+  35%{color:#a2edf8}
+  70%{color:#c6b7ff}
+}
+@keyframes subtitle-color-wave{
+  0%,100%{color:#f8f9ff}
+  52%{color:#cce5ff}
+}
