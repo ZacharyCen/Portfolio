@@ -254,14 +254,12 @@ window.addEventListener('focus', refreshHandicap);
 
 function setupMotion() {
   const hero = document.querySelector('.hero');
-  const ring = document.querySelector('.cursor-orbit');
   const backdrop = document.querySelector('.space-backdrop');
   const sceneWindows = [...document.querySelectorAll('.parallax-window')];
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   let frame = 0;
   let pointer = null;
-  let cursor = null;
   let orbitX = 0;
   let orbitY = 0;
   let fieldX = 0;
@@ -311,24 +309,13 @@ function setupMotion() {
     backdrop.style.setProperty('--field-x', fieldX.toFixed(2) + 'px');
     backdrop.style.setProperty('--field-y', fieldY.toFixed(2) + 'px');
 
-    let cursorMoving = false;
-    if (pointer) {
-      cursor ||= { ...pointer };
-      cursor.x += (pointer.x - cursor.x) * .19;
-      cursor.y += (pointer.y - cursor.y) * .19;
-      ring.style.setProperty('--cursor-x', cursor.x.toFixed(2) + 'px');
-      ring.style.setProperty('--cursor-y', cursor.y.toFixed(2) + 'px');
-      ring.classList.add('visible');
-      cursorMoving = Math.hypot(pointer.x - cursor.x, pointer.y - cursor.y) > .25;
-    }
     const orbitMoving = Math.hypot(targetX - orbitX, targetY - orbitY) > .2;
     const fieldMoving = Math.hypot(fieldTargetX - fieldX, fieldTargetY - fieldY) > .2;
-    if (cursorMoving || orbitMoving || fieldMoving) requestFrame();
+    if (orbitMoving || fieldMoving) requestFrame();
   }
 
   function clearPointer() {
-    pointer = cursor = null;
-    ring.classList.remove('visible');
+    pointer = null;
     requestFrame();
   }
 

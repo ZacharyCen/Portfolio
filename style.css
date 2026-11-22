@@ -59,17 +59,6 @@ a.metric,button{transition:background-color .18s,border-color .18s,color .18s,tr
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
   a.metric:hover{transform:translateY(-3px)}
 }
-.cursor-orbit{display:none}
-@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
-  .cursor-orbit{
-    display:block;position:fixed;left:0;top:0;z-index:4;
-    width:26px;height:26px;border:1px solid #83ffcb99;border-radius:50%;
-    box-shadow:0 0 22px #5fffc85e,inset 0 0 10px #aaffdc30;
-    pointer-events:none;opacity:0;transition:opacity .22s;
-    transform:translate3d(var(--cursor-x,-100px),var(--cursor-y,-100px),0) translate(-50%,-50%);
-  }
-  .cursor-orbit.visible{opacity:.85}
-}
 @media (prefers-reduced-motion:reduce){
   a.metric,button{transition:none}
   .orbits{transform:none}
