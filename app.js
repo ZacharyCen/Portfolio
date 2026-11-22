@@ -266,6 +266,8 @@ function setupMotion() {
   let fieldX = 0;
   let fieldY = 0;
 
+  const clampUnit = value => Math.max(0, Math.min(1, value));
+
   function requestFrame() {
     if (!frame && !reduceMotion.matches) frame = requestAnimationFrame(renderMotion);
   }
@@ -279,7 +281,9 @@ function setupMotion() {
       && pointer.y >= bounds.top && pointer.y <= bounds.bottom;
     const x = inside ? (pointer.x - bounds.left) / bounds.width : .85;
     const y = inside ? (pointer.y - bounds.top) / bounds.height : .52;
-    const scrollOffset = Math.max(0, Math.min(bounds.height, -bounds.top)) * .19;
+    const heroTravel = clampUnit(-bounds.top / (bounds.height || 1));
+    const scrollOffset = heroTravel * bounds.height * .19;
+    hero.style.setProperty('--grid-depth', (heroTravel * 55).toFixed(2) + 'px');
     const targetX = inside ? (x - .5) * 65 : 0;
     const targetY = scrollOffset + (inside ? (y - .5) * 48 : 0);
     orbitX += (targetX - orbitX) * .16;
@@ -292,7 +296,8 @@ function setupMotion() {
     hero.style.setProperty('--tilt-x', ((orbitY - scrollOffset) * -.36).toFixed(2) + 'deg');
 
     const fieldTargetX = pointer ? (pointer.x / innerWidth - .5) * 34 : 0;
-    const fieldTargetY = Math.min(scrollY * .07, 140) + (pointer ? (pointer.y / innerHeight - .5) * 32 : 0);
+    const pageTravel = clampUnit(scrollY / (document.documentElement.scrollHeight - innerHeight || 1));
+    const fieldTargetY = pageTravel * 205 + (pointer ? (pointer.y / innerHeight - .5) * 32 : 0);
     fieldX += (fieldTargetX - fieldX) * .12;
     fieldY += (fieldTargetY - fieldY) * .12;
     backdrop.style.setProperty('--field-x', fieldX.toFixed(2) + 'px');

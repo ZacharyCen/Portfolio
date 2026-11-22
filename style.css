@@ -197,3 +197,38 @@ body{isolation:isolate}
   0%,100%{color:#f8f9ff}
   52%{color:#cce5ff}
 }
+
+/* Text remains in the foreground while the instrument grid recedes below it. */
+header{background:#0b1315;border-bottom-color:#27423e}
+.mast nav a,.cycle,.award-date,.target,.tag{
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+.mast nav a{letter-spacing:.015em}
+.hero{
+  background:radial-gradient(ellipse at 84% 49%,#16434a 0%,#152740 33%,#0b171b 67%,#090e13 100%);
+  border-color:#304b44;
+}
+.hero-grid{
+  position:absolute;z-index:-1;inset:41% -27% -12%;pointer-events:none;
+  background:
+    linear-gradient(#9affca2c 1px,transparent 1px),
+    linear-gradient(90deg,#9affca26 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(0deg,#000,transparent 77%);
+  transform:perspective(410px) rotateX(57deg) translateY(var(--grid-depth,0px));
+  transform-origin:center 90%;
+  opacity:.56;
+}
+.hero::before{
+  background-image:
+    linear-gradient(#b7edd511 1px,transparent 1px),
+    linear-gradient(90deg,#b7edd511 1px,transparent 1px),
+    radial-gradient(#c2edd74f .75px,transparent 1px);
+  background-size:42px 42px,42px 42px,27px 27px;
+}
+.space-layer{inset:-235px -30px}
+.panel{border-color:#2d4346;background:linear-gradient(145deg,#101b21,#0a131b)}
+@media(max-width:650px){.hero-grid{opacity:.39}}
+@media(prefers-reduced-motion:reduce){
+  .hero-grid{transform:perspective(410px) rotateX(57deg)}
+}

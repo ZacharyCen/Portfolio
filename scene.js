@@ -82,6 +82,13 @@ function start() {
   let targetX = 0;
   let targetY = 0;
   let compact = false;
+  let scrollTarget = 0;
+  let scrollDepth = 0;
+
+  function measureScroll() {
+    const bounds = hero.getBoundingClientRect();
+    scrollTarget = MathUtils.clamp(-bounds.top / (bounds.height || 1), 0, 1);
+  }
 
   function resize() {
     const { clientWidth: width, clientHeight: height } = canvas;
@@ -92,7 +99,7 @@ function start() {
     compact = width < 540;
     system.position.x = compact ? 1.04 : 1.63;
     system.position.y = compact ? -1.0 : 0;
-    system.scale.setScalar(compact ? .69 : 1);
+    measureScroll();
     sync();
   }
 
@@ -101,13 +108,16 @@ function start() {
     if (previousTime) elapsed += Math.min((now - previousTime) / 1000, .05);
     previousTime = now;
     const t = elapsed;
+    scrollDepth = MathUtils.lerp(scrollDepth, scrollTarget, .085);
     planet.rotation.set(.18, t * .21, -.24);
     rings.rotation.x = 1.10 + Math.sin(t * .30) * .12;
     rings.rotation.z = t * .027;
-    system.rotation.x = MathUtils.lerp(system.rotation.x, targetY * .24, .055);
+    system.rotation.x = MathUtils.lerp(system.rotation.x, targetY * .24 - scrollDepth * .25, .055);
     system.rotation.y = MathUtils.lerp(system.rotation.y, targetX * .32, .055);
     system.rotation.z = .39 + Math.sin(t * .29) * .075;
-    system.position.y = (compact ? -1.0 : 0) + Math.sin(t * .76) * .14;
+    system.position.y = (compact ? -1.0 : 0) + Math.sin(t * .76) * .14 - scrollDepth * 1.45;
+    system.scale.setScalar((compact ? .69 : 1) * (1 + scrollDepth * .14));
+    dust.position.y = -scrollDepth * .35;
     dust.rotation.z = t * .007;
     for (const { moon, radius, phase, speed } of moons) {
       const angle = phase + t * speed;
@@ -141,6 +151,7 @@ function start() {
   new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }).observe(hero);
   new ResizeObserver(resize).observe(canvas);
   document.addEventListener('visibilitychange', sync);
+  window.addEventListener('scroll', measureScroll, { passive: true });
   reduced.addEventListener('change', sync);
   resize();
 }
